@@ -1,6 +1,7 @@
+#ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
+#endif
 
-#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

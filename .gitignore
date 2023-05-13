@@ -5,3 +5,8 @@ compile_commands.json
 
 bin/*
 !bin/.gitkeep
+
+cmake-build-debug
+cmake-build-release
+
+.idea
