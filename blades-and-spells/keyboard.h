@@ -6,4 +6,8 @@ typedef enum {
 	F_KEY = 102
 } Keys;
 
+void keyDown(unsigned char);
+
+void keyUp(unsigned char);
+
 #endif /* BNS_KEYBOARD_H */

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7844EE4D2A2BACE3004498D3 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7844EE4C2A2BACE3004498D3 /* main.c */; };
+		7844EE592A2BE48B004498D3 /* keyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = 7844EE582A2BE48B004498D3 /* keyboard.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +31,7 @@
 		7844EE552A2BB033004498D3 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		7844EE562A2BB033004498D3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7844EE572A2BB033004498D3 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		7844EE582A2BE48B004498D3 /* keyboard.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = keyboard.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			children = (
 				7844EE4C2A2BACE3004498D3 /* main.c */,
 				7844EE532A2BAE9D004498D3 /* keyboard.h */,
+				7844EE582A2BE48B004498D3 /* keyboard.c */,
 			);
 			path = "blades-and-spells";
 			sourceTree = "<group>";
@@ -129,6 +132,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7844EE592A2BE48B004498D3 /* keyboard.c in Sources */,
 				7844EE4D2A2BACE3004498D3 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

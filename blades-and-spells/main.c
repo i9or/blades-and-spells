@@ -89,13 +89,13 @@ void keyDownHandler(unsigned char key, int x, int y) {
 		exit(EXIT_SUCCESS);
 	}
 
-	gKeyState[key] = true;
+	keyDown(key);
 
 	glutPostRedisplay();
 }
 
 void keyUpHandler(unsigned char key, int x, int y) {
-	gKeyState[key] = false;
+	keyUp(key);
 
 	glutPostRedisplay();
 }
