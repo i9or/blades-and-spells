@@ -9,13 +9,15 @@
 /* Begin PBXBuildFile section */
 		7844EE4D2A2BACE3004498D3 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7844EE4C2A2BACE3004498D3 /* main.c */; };
 		7844EE592A2BE48B004498D3 /* keyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = 7844EE582A2BE48B004498D3 /* keyboard.c */; };
+		7844EE5C2A2BEBC9004498D3 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7844EE5B2A2BEBC9004498D3 /* GLUT.framework */; };
+		7844EE5E2A2BEBD1004498D3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7844EE5D2A2BEBD1004498D3 /* OpenGL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		7844EE472A2BACE3004498D3 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
+			dstPath = /usr/share/man/man1;
 			dstSubfolderSpec = 0;
 			files = (
 			);
@@ -32,6 +34,8 @@
 		7844EE562A2BB033004498D3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7844EE572A2BB033004498D3 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		7844EE582A2BE48B004498D3 /* keyboard.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = keyboard.c; sourceTree = "<group>"; };
+		7844EE5B2A2BEBC9004498D3 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		7844EE5D2A2BEBD1004498D3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7844EE5C2A2BEBC9004498D3 /* GLUT.framework in Frameworks */,
+				7844EE5E2A2BEBD1004498D3 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +60,7 @@
 				7844EE562A2BB033004498D3 /* README.md */,
 				7844EE4B2A2BACE3004498D3 /* blades-and-spells */,
 				7844EE4A2A2BACE3004498D3 /* Products */,
+				7844EE5A2A2BEBC9004498D3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,6 +80,15 @@
 				7844EE582A2BE48B004498D3 /* keyboard.c */,
 			);
 			path = "blades-and-spells";
+			sourceTree = "<group>";
+		};
+		7844EE5A2A2BEBC9004498D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7844EE5D2A2BEBD1004498D3 /* OpenGL.framework */,
+				7844EE5B2A2BEBC9004498D3 /* GLUT.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,6 +269,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CONFIGURATION_BUILD_DIR = bin/;
+				EXECUTABLE_PREFIX = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					GL_SILENCE_DEPRECATION,
@@ -268,6 +286,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CONFIGURATION_BUILD_DIR = bin/;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = GL_SILENCE_DEPRECATION;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
