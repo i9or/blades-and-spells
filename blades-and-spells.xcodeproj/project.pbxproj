@@ -26,6 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7839162B2A2C82F200FF3A6A /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		7844EE492A2BACE3004498D3 /* blades-and-spells */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "blades-and-spells"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7844EE4C2A2BACE3004498D3 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		7844EE532A2BAE9D004498D3 /* keyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
@@ -54,6 +55,7 @@
 		7844EE402A2BACE3004498D3 = {
 			isa = PBXGroup;
 			children = (
+				7839162B2A2C82F200FF3A6A /* assets */,
 				7844EE542A2BB033004498D3 /* .clang-format */,
 				7844EE552A2BB033004498D3 /* .gitignore */,
 				7844EE572A2BB033004498D3 /* LICENSE */,
