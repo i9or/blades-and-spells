@@ -6,13 +6,13 @@
 
 #include <GLUT/glut.h>
 
+#include "camera.h"
 #include "keyboard.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
 float gTriangleAngle = 0.f;
-bool gKeyState[256];
 bool gFpsMode = false;
 
 void initGame(void);
@@ -22,6 +22,7 @@ void keyDownHandler(unsigned char, int, int);
 void keyUpHandler(unsigned char, int, int);
 void mouseMotionHandler(int, int);
 void processKeyboard(void);
+void processCamera(void);
 
 void drawGrid(void);
 void drawTriangle(void);
@@ -51,21 +52,30 @@ int main(int argc, char** argv) {
 void initGame(void) {
 	glClearColor(0.1f, 0.2f, 0.3f, 1.f);
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+	cameraInit();
 }
 
 void displayHandler(void) {
+	int t1 = glutGet(GLUT_ELAPSED_TIME);
 	processKeyboard();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glLoadIdentity();
-
-	gluLookAt(5.f, 2.f, 5.f, 0.f, 1.f, 0.f, 0.f, 1.f, 0.f);
+	processCamera();
 
 	drawGrid();
 	drawTriangle();
 
 	glutSwapBuffers();
+
+	int t2 = glutGet(GLUT_ELAPSED_TIME);
+
+	char title[64];
+	sprintf(title, "Draw time: %d", t2 - t1);
+	glutSetWindowTitle(title);
 }
 
 void reshapeHandler(int w, int h) {
@@ -80,22 +90,22 @@ void reshapeHandler(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(60.0, ratio, 0.1, 1000.0);
-
-	glMatrixMode(GL_MODELVIEW);
 }
 
 void keyDownHandler(unsigned char key, int x, int y) {
+	printf("Key pressed: %c - %d\n", key, key);
+
 	if (key == ESCAPE_KEY) {
 		exit(EXIT_SUCCESS);
 	}
 
-	keyDown(key);
+	pressKey(key);
 
 	glutPostRedisplay();
 }
 
 void keyUpHandler(unsigned char key, int x, int y) {
-	keyUp(key);
+	resetKey(key);
 
 	glutPostRedisplay();
 }
@@ -144,38 +154,13 @@ void drawTriangle(void) {
 }
 
 void mouseMotionHandler(int x, int y) {
-	static bool justWarped = false;
-
-	if (justWarped) {
-		justWarped = false;
-		return;
-	}
-
-	if (gFpsMode) {
-		justWarped = true;
-		int w = glutGet(GLUT_WINDOW_WIDTH);
-		int h = glutGet(GLUT_WINDOW_HEIGHT);
-		float windowPosX = (float)glutGet(GLUT_WINDOW_X);
-		float windowPosY = (float)glutGet(GLUT_WINDOW_Y);
-
-		CGPoint warpPoint = CGPointMake((float)w / 2 + windowPosX, (float)h / 2 + windowPosY);
-		CGWarpMouseCursorPosition(warpPoint);
-		CGAssociateMouseAndMouseCursorPosition(true);
-
-		int dx = (w / 2) - x;
-		int dy = (h / 2) - y;
-
-		if (dx && dy) {
-			printf("dx: %d, dy: %d\n", dx, dy);
-		}
-	}
-
+	// Add mouse handling here
 	glutPostRedisplay();
 }
 
 void processKeyboard(void) {
-	if (gKeyState[F_KEY]) {
-		gKeyState[F_KEY] = false;
+	if (isKeyPressed(F_KEY)) {
+		resetKey(F_KEY);
 		gFpsMode = !gFpsMode;
 
 		if (gFpsMode) {
@@ -184,4 +169,39 @@ void processKeyboard(void) {
 			CGDisplayShowCursor(CGMainDisplayID());
 		}
 	}
+
+	if (isKeyPressed(W_KEY)) {
+		cameraMove(1.f);
+	}
+
+	if (isKeyPressed(A_KEY)) {
+		cameraRotateYaw(-10);
+	}
+
+	if (isKeyPressed(S_KEY)) {
+		cameraMove(-1.f);
+	}
+
+	if (isKeyPressed(D_KEY)) {
+		cameraRotateYaw(10);
+	}
+
+	if (isKeyPressed(T_KEY)) {
+		cameraRotatePitch(5);
+	}
+
+	if (isKeyPressed(G_KEY)) {
+		cameraRotatePitch(-5);
+	}
+}
+
+void processCamera(void) {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	Vec3 pos = cameraGetPosition();
+	Vec3 dir = cameraGetDirection();
+	gluLookAt(pos.x, pos.y, pos.z,
+						pos.x + dir.x, pos.y + dir.y, pos.z + dir.z,
+						0.f, 1.f, 0.f);
 }

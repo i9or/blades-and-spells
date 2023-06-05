@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7839162E2A2C882800FF3A6A /* camera.c in Sources */ = {isa = PBXBuildFile; fileRef = 7839162D2A2C882800FF3A6A /* camera.c */; };
+		783916312A2C88B000FF3A6A /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = 783916302A2C88B000FF3A6A /* vec3.c */; };
 		7844EE4D2A2BACE3004498D3 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7844EE4C2A2BACE3004498D3 /* main.c */; };
 		7844EE592A2BE48B004498D3 /* keyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = 7844EE582A2BE48B004498D3 /* keyboard.c */; };
 		7844EE5C2A2BEBC9004498D3 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7844EE5B2A2BEBC9004498D3 /* GLUT.framework */; };
@@ -27,6 +29,11 @@
 
 /* Begin PBXFileReference section */
 		7839162B2A2C82F200FF3A6A /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		7839162C2A2C882800FF3A6A /* camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera.h; sourceTree = "<group>"; };
+		7839162D2A2C882800FF3A6A /* camera.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = camera.c; sourceTree = "<group>"; };
+		7839162F2A2C88B000FF3A6A /* vec3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
+		783916302A2C88B000FF3A6A /* vec3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
+		783916322A2DCF6800FF3A6A /* NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = NOTES.md; sourceTree = "<group>"; };
 		7844EE492A2BACE3004498D3 /* blades-and-spells */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "blades-and-spells"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7844EE4C2A2BACE3004498D3 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		7844EE532A2BAE9D004498D3 /* keyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
@@ -55,6 +62,7 @@
 		7844EE402A2BACE3004498D3 = {
 			isa = PBXGroup;
 			children = (
+				783916322A2DCF6800FF3A6A /* NOTES.md */,
 				7839162B2A2C82F200FF3A6A /* assets */,
 				7844EE542A2BB033004498D3 /* .clang-format */,
 				7844EE552A2BB033004498D3 /* .gitignore */,
@@ -80,6 +88,10 @@
 				7844EE4C2A2BACE3004498D3 /* main.c */,
 				7844EE532A2BAE9D004498D3 /* keyboard.h */,
 				7844EE582A2BE48B004498D3 /* keyboard.c */,
+				7839162C2A2C882800FF3A6A /* camera.h */,
+				7839162D2A2C882800FF3A6A /* camera.c */,
+				7839162F2A2C88B000FF3A6A /* vec3.h */,
+				783916302A2C88B000FF3A6A /* vec3.c */,
 			);
 			path = "blades-and-spells";
 			sourceTree = "<group>";
@@ -150,7 +162,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				783916312A2C88B000FF3A6A /* vec3.c in Sources */,
 				7844EE592A2BE48B004498D3 /* keyboard.c in Sources */,
+				7839162E2A2C882800FF3A6A /* camera.c in Sources */,
 				7844EE4D2A2BACE3004498D3 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
