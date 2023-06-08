@@ -2,7 +2,7 @@
 #define vec3_h
 
 typedef struct Vec3 {
-	float x, y, z;
+  float x, y, z;
 } Vec3;
 
 #endif /* vec3_h */

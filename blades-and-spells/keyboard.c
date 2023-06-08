@@ -1,3 +1,10 @@
+//
+//  keyboard.c
+//  blades-and-spells
+//
+//  Created by Igor on 03/06/2023.
+//
+
 #include <stdbool.h>
 
 #include "keyboard.h"
@@ -5,13 +12,13 @@
 static bool mKeyState[256];
 
 void pressKey(unsigned char key) {
-	mKeyState[key] = true;
+  mKeyState[key] = true;
 }
 
 void resetKey(unsigned char key) {
-	mKeyState[key] = false;
+  mKeyState[key] = false;
 }
 
 bool isKeyPressed(unsigned char key) {
-	return mKeyState[key];
+  return mKeyState[key];
 }
