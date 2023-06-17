@@ -5,18 +5,18 @@
 
 void cameraInit(void);
 
-void cameraRotateYaw(const int);
+void cameraRotateYaw(const float);
 
-void cameraRotatePitch(const int);
+void cameraRotatePitch(const float);
 
 void cameraMove(float);
-
-void cameraStrafe(float);
 
 void cameraUpdateDirection(void);
 
 Vec3 cameraGetPosition(void);
 
 Vec3 cameraGetDirection(void);
+
+Vec3 cameraGetUp(void);
 
 #endif /* camera_h */

@@ -11,11 +11,13 @@
 #include "vec3.h"
 
 static const float MOVE_SPEED = 0.1f;
-static const float ROTATION_SPEED = M_PI / 180.f * 0.2f;
+static const float ROTATION_SPEED = M_PI / 180.f * 2.f;
 static const float ROTATION_LIMIT = 89.f * M_PI / 180.f;
+static Vec3 WORLD_UP = { .x = 0.f, .y = 1.f, .z = 0.f };
 
 static Vec3 mPosition;
 static Vec3 mDirection;
+static Vec3 mUp;
 static float mYaw;
 static float mPitch;
 
@@ -26,13 +28,13 @@ void cameraInit(void) {
   cameraUpdateDirection();
 }
 
-void cameraRotateYaw(const int dx) {
+void cameraRotateYaw(const float dx) {
   mYaw += ROTATION_SPEED * (float)dx;
 
   cameraUpdateDirection();
 }
 
-void cameraRotatePitch(const int dy) {
+void cameraRotatePitch(const float dy) {
   mPitch += ROTATION_SPEED * (float)dy;
 
   if (mPitch < -ROTATION_LIMIT) {
@@ -47,20 +49,22 @@ void cameraRotatePitch(const int dy) {
 }
 
 void cameraMove(float amount) {
-  mPosition.x += amount * mDirection.x * MOVE_SPEED;
-  mPosition.y += amount * mDirection.y * MOVE_SPEED;
-  mPosition.z += amount * mDirection.z * MOVE_SPEED;
-}
-
-void cameraStrafe(float amount) {
-  mPosition.x += amount * MOVE_SPEED * cosf(mYaw - M_PI_2);
-  mPosition.z += amount * MOVE_SPEED * sinf(mYaw - M_PI_2);
+  mPosition.x += amount * cosf(mYaw) * MOVE_SPEED;
+  mPosition.z += amount * sinf(mYaw) * MOVE_SPEED;
 }
 
 void cameraUpdateDirection(void) {
   mDirection.x = cosf(mYaw) * cos(mPitch);
   mDirection.y = sinf(mPitch);
   mDirection.z = sinf(mYaw) * cos(mPitch);
+
+  normalizeVec3(&mDirection);
+
+  Vec3 right = cross(&mDirection, &WORLD_UP);
+  normalizeVec3(&right);
+
+  mUp = cross(&right, &mDirection);
+  normalizeVec3(&mUp);
 }
 
 Vec3 cameraGetPosition(void) {
@@ -69,4 +73,8 @@ Vec3 cameraGetPosition(void) {
 
 Vec3 cameraGetDirection(void) {
   return mDirection;
+}
+
+Vec3 cameraGetUp(void) {
+  return mUp;
 }

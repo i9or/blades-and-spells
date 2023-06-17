@@ -182,7 +182,7 @@ void processKeyboard(void) {
   }
 
   if (isKeyPressed(A_KEY)) {
-    cameraRotateYaw(-10);
+    cameraRotateYaw(-1.f);
   }
 
   if (isKeyPressed(S_KEY)) {
@@ -190,15 +190,15 @@ void processKeyboard(void) {
   }
 
   if (isKeyPressed(D_KEY)) {
-    cameraRotateYaw(10);
+    cameraRotateYaw(1.f);
   }
 
   if (isKeyPressed(T_KEY)) {
-    cameraRotatePitch(5);
+    cameraRotatePitch(1.f);
   }
 
   if (isKeyPressed(G_KEY)) {
-    cameraRotatePitch(-5);
+    cameraRotatePitch(-1.f);
   }
 }
 
@@ -208,7 +208,8 @@ void processCamera(void) {
 
   Vec3 pos = cameraGetPosition();
   Vec3 dir = cameraGetDirection();
+  Vec3 up = cameraGetUp();
   gluLookAt(pos.x, pos.y, pos.z,
             pos.x + dir.x, pos.y + dir.y, pos.z + dir.z,
-            0.f, 1.f, 0.f);
+            up.x, up.y, up.z);
 }
