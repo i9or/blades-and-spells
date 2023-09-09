@@ -1,6 +1,8 @@
 #ifndef keyboard_h
 #define keyboard_h
 
+#include <stdbool.h>
+
 typedef enum {
   ESCAPE_KEY = 27,
   F_KEY = 102,
