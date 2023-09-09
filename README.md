@@ -11,11 +11,25 @@ Small demo. Made just for fun using really outdated stuff.
 
 ## Setup
 
-Project uses macOS built-in libraries and frameworks and XCode 14.
+Project uses macOS built-in libraries and frameworks and CMake.
 
 ## Build
 
-Open project in XCode, _Product_ -> _Build_.
+Project uses CMake for build:
+
+```sh
+cd build
+cmake ..
+cmake --build .
+```
+
+## Run
+
+From the project root:
+
+```sh
+./bin/blades-and-spells
+```
 
 ## License
 

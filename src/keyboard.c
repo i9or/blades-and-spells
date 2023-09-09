@@ -1,10 +1,3 @@
-//
-//  keyboard.c
-//  blades-and-spells
-//
-//  Created by Igor on 03/06/2023.
-//
-
 #include <stdbool.h>
 
 #include "keyboard.h"

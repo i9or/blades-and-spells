@@ -1,12 +1,9 @@
-xcuserdata/
-
-*.xcscmblueprint
-*.xccheckout
-
-DerivedData/
-Build/
+build/*
+!build/.gitkeep
 
 bin/*
 !bin/.gitkeep
 
 .DS_Store
+
+.cache
