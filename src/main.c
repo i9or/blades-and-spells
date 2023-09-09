@@ -1,10 +1,3 @@
-//
-//  main.c
-//  blades-and-spells
-//
-//  Created by Igor on 03/06/2023.
-//
-
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,7 +27,7 @@ void processCamera(void);
 void drawGrid(void);
 void drawTriangle(void);
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
   glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
