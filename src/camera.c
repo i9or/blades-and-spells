@@ -1,6 +1,7 @@
 #include <math.h>
 
 #include "camera.h"
+#include "utils/logger.h"
 #include "vec3.h"
 
 static const float MOVE_SPEED = 0.1f;
@@ -15,6 +16,7 @@ static float mYaw;
 static float mPitch;
 
 void cameraInit(void) {
+  logDebug("Initializing a camera");
   mYaw = M_PI / 2.f;
   mPitch = 0.f;
   mPosition = (Vec3) { .x = 0.f, .y = 1.8f, .z = -5.f };
@@ -51,13 +53,13 @@ void cameraUpdateDirection(void) {
   mDirection.y = sinf(mPitch);
   mDirection.z = sinf(mYaw) * cos(mPitch);
 
-  normalizeVec3(&mDirection);
+  normalize3(&mDirection);
 
-  Vec3 right = cross(&mDirection, &WORLD_UP);
-  normalizeVec3(&right);
+  Vec3 right = cross3(&mDirection, &WORLD_UP);
+  normalize3(&right);
 
-  mUp = cross(&right, &mDirection);
-  normalizeVec3(&mUp);
+  mUp = cross3(&right, &mDirection);
+  normalize3(&mUp);
 }
 
 Vec3 cameraGetPosition(void) {

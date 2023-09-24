@@ -8,6 +8,7 @@
 
 #include "camera.h"
 #include "keyboard.h"
+#include "utils/logger.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -28,6 +29,7 @@ void drawGrid(void);
 void drawTriangle(void);
 
 int main(int argc, char **argv) {
+  logDebug("Creating a window");
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
   glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -50,6 +52,7 @@ int main(int argc, char **argv) {
 }
 
 void initGame(void) {
+  logDebug("Initializing a game");
   glClearColor(0.1f, 0.2f, 0.3f, 1.f);
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LEQUAL);
@@ -93,7 +96,7 @@ void reshapeHandler(int w, int h) {
 }
 
 void keyDownHandler(unsigned char key, int x, int y) {
-  printf("Key pressed: %c - %d\n", key, key);
+  logDebug("Key pressed: %c - %d", key, key);
 
   if (key == ESCAPE_KEY) {
     exit(EXIT_SUCCESS);
