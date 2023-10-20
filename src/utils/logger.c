@@ -23,8 +23,8 @@ static bool getTimeNow(char *buf, size_t len) {
 
 void logDebug(const char *fmt, ...) {
   char timeStr[50];
-  if (!getTimeNow(timeStr, sizeof timeStr)) {
-    strncpy(timeStr, "Failed to retrieve time", sizeof timeStr);
+  if (!getTimeNow(timeStr, sizeof(timeStr))) {
+    strncpy(timeStr, "Failed to retrieve time", sizeof(timeStr));
   }
 
   va_list args1;
@@ -33,7 +33,7 @@ void logDebug(const char *fmt, ...) {
   va_copy(args2, args1);
   char debugStr[1 + vsnprintf(NULL, 0, fmt, args1)];
   va_end(args1);
-  vsnprintf(debugStr, sizeof debugStr, fmt, args2);
+  vsnprintf(debugStr, sizeof(debugStr), fmt, args2);
   va_end(args2);
 
   printf("%s [DEBUG] %s\n", timeStr, debugStr);

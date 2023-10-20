@@ -1,7 +1,7 @@
 #ifndef vec3_h
 #define vec3_h
 
-typedef struct Vec3 {
+typedef struct {
   float x, y, z;
 } Vec3;
 
