@@ -9,11 +9,12 @@
 #include "camera.h"
 #include "keyboard.h"
 #include "utils/logger.h"
+#include "utils/triangle.h"
 
+#define WINDOWED_MODE true /* change to "false" to run game in fullscreen */
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
-float gTriangleAngle = 0.f;
 bool gFpsMode = false;
 
 void initGame(void);
@@ -26,15 +27,26 @@ void processKeyboard(void);
 void processCamera(void);
 
 void drawGrid(void);
-void drawTriangle(void);
 
 int main(int argc, char **argv) {
   logDebug("Creating a window");
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-  glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-  glutInitWindowPosition(100, 100);
-  glutCreateWindow("Blades and Spells");
+
+  if (WINDOWED_MODE == true) {
+      glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+      glutInitWindowPosition(100, 100);
+      glutCreateWindow("Blades and Spells");
+  } else {
+    glutGameModeString("800x600:32");
+    if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE))
+      glutEnterGameMode();
+    else {
+      logDebug("The selected mode is not available");
+      exit(1);
+    }
+  }
+
   glutIgnoreKeyRepeat(1);
 
   initGame();
@@ -129,29 +141,6 @@ void drawGrid(void) {
   }
 
   glEnd();
-
-  glPopMatrix();
-}
-
-void drawTriangle(void) {
-  glPushMatrix();
-
-  glRotatef(gTriangleAngle, 0.f, 1.f, 0.f);
-
-  glBegin(GL_TRIANGLES);
-  glColor3f(1.f, 0.f, 0.f);
-  glVertex3f(-1.f, 0.f, 0.f);
-  glColor3f(0.f, 1.f, 0.f);
-  glVertex3f(1.f, 0.f, 0.f);
-  glColor3f(0.f, 0.f, 1.f);
-  glVertex3f(0.f, 2.f, 0.f);
-  glEnd();
-
-  gTriangleAngle += 1.f;
-
-  if (gTriangleAngle >= 360) {
-    gTriangleAngle = 0.f;
-  }
 
   glPopMatrix();
 }
