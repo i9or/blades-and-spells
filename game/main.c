@@ -1,14 +1,13 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <ApplicationServices/ApplicationServices.h>
-
 #include <GLUT/glut.h>
+
+#include "../shared/utils/logger.h"
 
 #include "camera.h"
 #include "keyboard.h"
-#include "utils/logger.h"
 #include "utils/triangle.h"
 
 #define WINDOWED_MODE true /* change to "false" to run game in fullscreen */

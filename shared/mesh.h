@@ -1,10 +1,10 @@
 #ifndef mesh_h
 #define mesh_h
 
-#include "./vec3.h"
-#include "./tex2.h"
-#include "./face.h"
-#include "../utils/dynamic_array.h"
+#include "vec3.h"
+#include "tex2.h"
+#include "face.h"
+#include "dynamic_array.h"
 
 typedef Array(Vec3) Vec3Array;
 typedef Array(Tex2) Tex2Array;

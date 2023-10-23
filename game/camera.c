@@ -1,7 +1,7 @@
 #include <math.h>
 
 #include "camera.h"
-#include "utils/logger.h"
+#include "../shared/utils/logger.h"
 
 static const float MOVE_SPEED = 0.1f;
 static const float ROTATION_SPEED = M_PI / 180.f * 2.f;

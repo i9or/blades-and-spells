@@ -1,7 +1,7 @@
 #ifndef camera_h
 #define camera_h
 
-#include "containers/vec3.h"
+#include "../shared/vec3.h"
 
 void cameraInit(void);
 

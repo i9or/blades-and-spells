@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "../utils/logger.h"
-#include "../containers/mesh.h"
+#include "../mesh.h"
 
 #include "constants.h"
 #include "load_obj.h"
