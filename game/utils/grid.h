@@ -1,6 +1,6 @@
 #ifndef grid_h
 #define grid_h
 
-/* TODO: to be implemented */
+void drawGrid(void);
 
 #endif /* grid_h */

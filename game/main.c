@@ -5,10 +5,13 @@
 #include <GLUT/glut.h>
 
 #include "../shared/utils/logger.h"
+#include "../shared/mesh.h"
+#include "../shared/loaders/load_obj.h"
 
 #include "camera.h"
 #include "keyboard.h"
 #include "utils/triangle.h"
+#include "utils/grid.h"
 
 #define WINDOWED_MODE true /* change to "false" to run game in fullscreen */
 #define WINDOW_WIDTH 800
@@ -17,6 +20,7 @@
 bool gFpsMode = false;
 
 void initGame(void);
+void cleanUp(void);
 void displayHandler(void);
 void reshapeHandler(int, int);
 void keyDownHandler(unsigned char, int, int);
@@ -25,9 +29,16 @@ void mouseMotionHandler(int, int);
 void processKeyboard(void);
 void processCamera(void);
 
-void drawGrid(void);
+Mesh gBunny;
+bool loadBunny(void);
+void drawBunny(void);
 
 int main(int argc, char **argv) {
+  if (atexit(cleanUp) != 0) {
+    logDebug("Clean up function registration failed...");
+    return EXIT_FAILURE;
+  }
+
   logDebug("Creating a window");
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
@@ -64,12 +75,21 @@ int main(int argc, char **argv) {
 
 void initGame(void) {
   logDebug("Initializing a game");
+
   glClearColor(0.1f, 0.2f, 0.3f, 1.f);
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LEQUAL);
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
   cameraInit();
+
+  loadBunny();
+}
+
+void cleanUp(void) {
+  logDebug("Cleaning up a game");
+
+  destroyMesh(&gBunny);
 }
 
 void displayHandler(void) {
@@ -82,6 +102,8 @@ void displayHandler(void) {
 
   drawGrid();
   drawTriangle();
+
+  drawBunny();
 
   glutSwapBuffers();
 
@@ -122,26 +144,6 @@ void keyUpHandler(unsigned char key, int x, int y) {
   resetKey(key);
 
   glutPostRedisplay();
-}
-
-void drawGrid(void) {
-  glPushMatrix();
-
-  glColor3f(0.f, 1.f, 0.f);
-
-  glBegin(GL_LINES);
-
-  for (int i = -50; i < 50; i += 1) {
-    glVertex3f((float)i, 0.f, -50.f);
-    glVertex3f((float)i, 0.f, 50.f);
-
-    glVertex3f(-50.f, 0.f, (float)i);
-    glVertex3f(50.f, 0.f, (float)i);
-  }
-
-  glEnd();
-
-  glPopMatrix();
 }
 
 void mouseMotionHandler(int x, int y) {
@@ -196,4 +198,29 @@ void processCamera(void) {
   gluLookAt(pos.x, pos.y, pos.z,
             pos.x + dir.x, pos.y + dir.y, pos.z + dir.z,
             up.x, up.y, up.z);
+}
+
+bool loadBunny(void) {
+  if(!loadObj("../assets/bunny.obj", &gBunny)) {
+    return false;
+  }
+
+  /* TODO: add materials and texture loading here */
+
+  return true;
+}
+void drawBunny(void) {
+  glPushMatrix();
+
+  glColor3f(1.f, 0.f, 0.f);
+
+  glBegin(GL_TRIANGLES);
+
+    glVertex3f(1.f, 2.f, 3.f);
+    glVertex3f(4.f, 5.f, 6.f);
+    glVertex3f(7.f, 9.f, 9.f);
+
+  glEnd();
+
+  glPopMatrix();
 }

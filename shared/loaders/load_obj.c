@@ -15,15 +15,15 @@ static int parseIndex(const char *str) {
 bool loadObj(const char *fileName, Mesh *m) {
   initMesh(m);
 
-  FILE *pFile = fopen(fileName, "r");
-  if (!pFile) {
-    logDebug("Error loading file: %s\n", fileName);
+  FILE *file = fopen(fileName, "r");
+  if (!file) {
+    logDebug("Error loading file: %s", fileName);
     return false;
   }
 
   char line[MAX_LINE_WIDTH];
   int lineCounter = 0;
-  while (fgets(line, MAX_LINE_WIDTH, pFile) != NULL) {
+  while (fgets(line, MAX_LINE_WIDTH, file) != NULL) {
     char *token;
 
     token = strtok(line, SPACE_DELIMITER);
@@ -127,24 +127,26 @@ bool loadObj(const char *fileName, Mesh *m) {
       }
 
       addMeshFace(m, f);
+    } else if ((strcmp(token, COMMENT_TOKEN) == 0)) {
+      logDebug("Skipping comment");
     } else {
-      printf("Token \"%s\" is not supported\n", token);
+      logDebug("Token \"%s\" is not supported", token);
     }
 
     lineCounter++;
   }
 
-  if (!feof(pFile)) {
-    perror("Error loading a file");
-    fclose(pFile);
+  if (!feof(file)) {
+    logDebug("Error loading a file");
+    fclose(file);
     destroyMesh(m);
 
     return false;
   } else {
-    printf("OBJ file %s loaded successfully\n", fileName);
-    printf("Total number of lines are read: %d\n", lineCounter);
+    logDebug("OBJ file %s loaded successfully", fileName);
+    logDebug("Total number of lines are read: %d", lineCounter);
   }
 
-  fclose(pFile);
+  fclose(file);
   return true;
 }

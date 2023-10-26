@@ -12,6 +12,7 @@
 #define VERTEX_NORMAL_COORDINATES_TOKEN "vn"
 #define VERTEX_TEXTURE_COORDINATES_TOKEN "vt"
 #define FACE_INDICES_TOKEN "f"
+#define COMMENT_TOKEN "#"
 
 #define stripNewline(str) (str)[strcspn((str), "\r\n")] = '\0'
 
