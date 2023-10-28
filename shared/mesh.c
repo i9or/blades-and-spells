@@ -35,7 +35,7 @@ void addMeshVertex(Mesh *m, Vec3 v) {
 }
 
 void addMeshNormal(Mesh *m, Vec3 v) {
-  pushToArray(m->vertices, v);
+  pushToArray(m->normals, v);
 }
 
 void addMeshUv(Mesh *m, Tex2 t) {

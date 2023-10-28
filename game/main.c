@@ -101,7 +101,7 @@ void displayHandler(void) {
   processCamera();
 
   drawGrid();
-  drawTriangle();
+  //  drawTriangle();
 
   drawBunny();
 
@@ -216,9 +216,19 @@ void drawBunny(void) {
 
   glBegin(GL_TRIANGLES);
 
-    glVertex3f(1.f, 2.f, 3.f);
-    glVertex3f(4.f, 5.f, 6.f);
-    glVertex3f(7.f, 9.f, 9.f);
+  for (int i = 0; i < gBunny.faces.count; i++) {
+    glVertex3f(gBunny.vertices.data[gBunny.faces.data[i].v1].x,
+               gBunny.vertices.data[gBunny.faces.data[i].v1].y,
+               gBunny.vertices.data[gBunny.faces.data[i].v1].z);
+
+    glVertex3f(gBunny.vertices.data[gBunny.faces.data[i].v2].x,
+               gBunny.vertices.data[gBunny.faces.data[i].v2].y,
+               gBunny.vertices.data[gBunny.faces.data[i].v2].z);
+
+    glVertex3f(gBunny.vertices.data[gBunny.faces.data[i].v3].x,
+               gBunny.vertices.data[gBunny.faces.data[i].v3].y,
+               gBunny.vertices.data[gBunny.faces.data[i].v3].z);
+  }
 
   glEnd();
 
