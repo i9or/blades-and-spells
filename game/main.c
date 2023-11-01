@@ -100,10 +100,10 @@ void displayHandler(void) {
 
   processCamera();
 
+  /* Draw scene here */
   drawGrid();
-  //  drawTriangle();
-
   drawBunny();
+  /* =============== */
 
   glutSwapBuffers();
 
