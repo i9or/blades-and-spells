@@ -1,23 +1,22 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#include "../utils/logger.h"
-#include "../mesh.h"
+#include "logger.h"
+#include "mesh.h"
 
-#include "constants.h"
 #include "load_obj.h"
 
 static int parseIndex(const char *str) {
   return ((int)strtol(str, NULL, 10) - 1);
 }
 
-bool loadObj(const char *fileName, Mesh *m) {
-  initMesh(m);
+bool loadObj(const char *path, Mesh *mesh) {
+  initMesh(mesh);
 
-  FILE *file = fopen(fileName, "r");
+  FILE *file = fopen(path, "r");
   if (!file) {
-    logDebug("Error loading file: %s", fileName);
+    LOG_DEBUG("Error loading file: %s", path);
     return false;
   }
 
@@ -31,11 +30,11 @@ bool loadObj(const char *fileName, Mesh *m) {
     if (strcmp(token, MATERIAL_LIBRARY_NAME_TOKEN) == 0) {
       token = strtok(NULL, SPACE_DELIMITER);
       stripNewline(token);
-      setMeshMaterialLib(m, token);
+      setMeshMaterialLib(mesh, token);
     } else if (strcmp(token, OBJECT_NAME_TOKEN) == 0) {
       token = strtok(NULL, SPACE_DELIMITER);
       stripNewline(token);
-      setMeshName(m, token);
+      setMeshName(mesh, token);
     } else if (strcmp(token, VERTEX_COORDINATES_TOKEN) == 0) {
       char *xStr, *yStr, *zStr;
 
@@ -48,7 +47,7 @@ bool loadObj(const char *fileName, Mesh *m) {
       v.y = strtof(yStr, NULL);
       v.z = strtof(zStr, NULL);
 
-      addMeshVertex(m, v);
+      addMeshVertex(mesh, v);
     } else if (strcmp(token, VERTEX_NORMAL_COORDINATES_TOKEN) == 0) {
       char *xStr, *yStr, *zStr;
 
@@ -61,7 +60,7 @@ bool loadObj(const char *fileName, Mesh *m) {
       n.y = strtof(yStr, NULL);
       n.z = strtof(zStr, NULL);
 
-      addMeshNormal(m, n);
+      addMeshNormal(mesh, n);
     } else if (strcmp(token, VERTEX_TEXTURE_COORDINATES_TOKEN) == 0) {
       char *uStr, *vStr;
 
@@ -72,7 +71,7 @@ bool loadObj(const char *fileName, Mesh *m) {
       t.u = strtof(uStr, NULL);
       t.v = strtof(vStr, NULL);
 
-      addMeshUv(m, t);
+      addMeshUv(mesh, t);
     } else if (strcmp(token, FACE_INDICES_TOKEN) == 0) {
       /* TODO: this branch should be DRYed */
       char firstFaceStr[64], secondFaceStr[64], thirdFaceStr[64];
@@ -126,25 +125,25 @@ bool loadObj(const char *fileName, Mesh *m) {
         f.n3 = parseIndex(c);
       }
 
-      addMeshFace(m, f);
+      addMeshFace(mesh, f);
     } else if ((strcmp(token, COMMENT_TOKEN) == 0)) {
-      logDebug("Skipping comment");
+      LOG_DEBUG("Skipping comment");
     } else {
-      logDebug("Token \"%s\" is not supported", token);
+      LOG_DEBUG("Token \"%s\" is not supported", token);
     }
 
     lineCounter++;
   }
 
   if (!feof(file)) {
-    logDebug("Error loading a file");
+    LOG_DEBUG("Error loading a file");
     fclose(file);
-    destroyMesh(m);
+    destroyMesh(mesh);
 
     return false;
   } else {
-    logDebug("OBJ file %s loaded successfully", fileName);
-    logDebug("Total number of lines are read: %d", lineCounter);
+    LOG_DEBUG("OBJ file %s loaded successfully", path);
+    LOG_DEBUG("Total number of lines are read: %d", lineCounter);
   }
 
   fclose(file);

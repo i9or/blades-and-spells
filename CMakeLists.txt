@@ -1,14 +1,11 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.28)
 project(blades_and_spells LANGUAGES C)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_STANDARD_REQUIRED ON)
-
 if (APPLE)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated-declarations")
-endif()
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated-declarations")
+endif ()
 
 set(PROJECT_OUTPUT_BIN_DIR "${PROJECT_SOURCE_DIR}/bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_OUTPUT_BIN_DIR}")
@@ -20,27 +17,13 @@ find_package(OpenGL REQUIRED)
 
 include_directories({GLUT_INCLUDE_DIR} {OPENGL_INCLUDE_DIR})
 
-file(GLOB_RECURSE GAME_SOURCES CONFIGURE_DEPENDS game/*.c game/*.h)
-file(GLOB_RECURSE GAME_ASSETS CONFIGURE_DEPENDS assets/*.*)
-file(GLOB_RECURSE SHARED_SOURCES CONFIGURE_DEPENDS shared/*.c shared/*.h)
-file(GLOB_RECURSE EDITOR_SOURCES CONFIGURE_DEPENDS editor/*.c editor/*.h)
+add_subdirectory(shared)
+add_subdirectory(game)
+add_subdirectory(editor)
 
-set(PROJECT_META
-	"README.md"
-	"LICENSE"
-	".gitignore"
-	".clang-format"
-	"NOTES.md")
-
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${GAME_SOURCES})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${GAME_ASSETS})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${PROJECT_META})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SHARED_SOURCES})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${EDITOR_SOURCES})
-
-add_executable(${PROJECT_NAME} ${GAME_SOURCES} ${SHARED_SOURCES} ${GAME_ASSETS} ${PROJECT_META})
-target_link_libraries(${PROJECT_NAME} GLUT::GLUT OpenGL::GL)
-
-set(EDITOR_NAME bns_editor)
-add_executable(${EDITOR_NAME} ${EDITOR_SOURCES} ${SHARED_SOURCES})
-target_link_libraries(${EDITOR_NAME} GLUT::GLUT OpenGL::GL)
+#add_executable(${PROJECT_NAME} game/main.c)
+#target_link_libraries(${PROJECT_NAME} PRIVATE GLUT::GLUT OpenGL::GL shared)
+#
+#set(EDITOR_NAME bns_editor)
+#add_executable(${EDITOR_NAME} editor/main.c)
+#target_link_libraries(${EDITOR_NAME} PRIVATE GLUT::GLUT OpenGL::GL shared)

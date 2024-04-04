@@ -3,65 +3,65 @@
 
 #include "mesh.h"
 
-void initMesh(Mesh *m) {
-  m->materialLib = NULL;
-  m->name = NULL;
-  initArray(m->vertices);
-  initArray(m->normals);
-  initArray(m->uvs);
-  initArray(m->faces);
+void initMesh(Mesh *mesh) {
+  mesh->materialLib = NULL;
+  mesh->name = NULL;
+  initArray(mesh->vertices);
+  initArray(mesh->normals);
+  initArray(mesh->uvs);
+  initArray(mesh->faces);
 }
 
-void setMeshMaterialLib(Mesh *m, const char *materialLib) {
-  if(m->materialLib != NULL) {
-    resetMeshName(m);
+void setMeshMaterialLib(Mesh *mesh, const char *path) {
+  if (mesh->materialLib != NULL) {
+    resetMeshName(mesh);
   }
 
-  m->materialLib = malloc(strlen(materialLib));
-  strncpy(m->materialLib, materialLib, strlen(materialLib));
+  mesh->materialLib = malloc(strlen(path));
+  strncpy(mesh->materialLib, path, strlen(path));
 }
 
-void setMeshName(Mesh *m, const char * name) {
-  if (m->name != NULL) {
-    resetMeshName(m);
+void setMeshName(Mesh *mesh, const char *name) {
+  if (mesh->name != NULL) {
+    resetMeshName(mesh);
   }
 
-  m->name = malloc(strlen(name));
-  strncpy(m->name, name, strlen(name));
+  mesh->name = malloc(strlen(name));
+  strncpy(mesh->name, name, strlen(name));
 }
 
-void addMeshVertex(Mesh *m, Vec3 v) {
-  pushToArray(m->vertices, v);
+void addMeshVertex(Mesh *mesh, Vec3 vertex) {
+  pushToArray(mesh->vertices, vertex);
 }
 
-void addMeshNormal(Mesh *m, Vec3 v) {
-  pushToArray(m->normals, v);
+void addMeshNormal(Mesh *mesh, Vec3 normal) {
+  pushToArray(mesh->normals, normal);
 }
 
-void addMeshUv(Mesh *m, Tex2 t) {
-  pushToArray(m->uvs, t);
+void addMeshUv(Mesh *mesh, Tex2 uv) {
+  pushToArray(mesh->uvs, uv);
 }
 
-void addMeshFace(Mesh *m, Face f) {
-  pushToArray(m->faces, f);
+void addMeshFace(Mesh *mesh, Face face) {
+  pushToArray(mesh->faces, face);
 }
 
-void resetMeshName(Mesh *m) {
-  free(m->name);
-  m->name = NULL;
+void resetMeshName(Mesh *mesh) {
+  free(mesh->name);
+  mesh->name = NULL;
 }
 
-void resetMeshMaterialLib(Mesh *m) {
-  free(m->materialLib);
-  m->name = NULL;
+void resetMeshMaterialLib(Mesh *mesh) {
+  free(mesh->materialLib);
+  mesh->name = NULL;
 }
 
-void destroyMesh(Mesh *m) {
-  resetMeshMaterialLib(m);
-  resetMeshName(m);
+void destroyMesh(Mesh *mesh) {
+  resetMeshMaterialLib(mesh);
+  resetMeshName(mesh);
 
-  destroyArray(m->vertices);
-  destroyArray(m->normals);
-  destroyArray(m->uvs);
-  destroyArray(m->faces);
+  destroyArray(mesh->vertices);
+  destroyArray(mesh->normals);
+  destroyArray(mesh->uvs);
+  destroyArray(mesh->faces);
 }

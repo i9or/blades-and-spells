@@ -1,11 +1,11 @@
 #include <math.h>
 
 #include "camera.h"
-#include "../shared/utils/logger.h"
+#include "logger.h"
 
 static const float MOVE_SPEED = 0.1f;
 static const float ROTATION_SPEED = M_PI / 180.f * 2.f;
-static const float ROTATION_LIMIT = 89.f * M_PI / 180.f;
+static const float ROTATION_LIMIT = 89.f * (float)M_PI / 180.f;
 static Vec3 WORLD_UP = { .x = 0.f, .y = 1.f, .z = 0.f };
 
 static Vec3 mPosition;
@@ -15,20 +15,20 @@ static float mYaw;
 static float mPitch;
 
 void cameraInit(void) {
-  logDebug("Initializing a camera");
+  LOG_DEBUG("Initializing a camera");
   mYaw = M_PI / 2.f;
   mPitch = 0.f;
   mPosition = (Vec3) { .x = 0.f, .y = 1.8f, .z = -5.f };
   cameraUpdateDirection();
 }
 
-void cameraRotateYaw(const float dx) {
+void cameraRotateYaw(float dx) {
   mYaw += ROTATION_SPEED * (float)dx;
 
   cameraUpdateDirection();
 }
 
-void cameraRotatePitch(const float dy) {
+void cameraRotatePitch(float dy) {
   mPitch += ROTATION_SPEED * (float)dy;
 
   if (mPitch < -ROTATION_LIMIT) {
@@ -48,9 +48,9 @@ void cameraMove(float amount) {
 }
 
 void cameraUpdateDirection(void) {
-  mDirection.x = cosf(mYaw) * cos(mPitch);
+  mDirection.x = cosf(mYaw) * cosf(mPitch);
   mDirection.y = sinf(mPitch);
-  mDirection.z = sinf(mYaw) * cos(mPitch);
+  mDirection.z = sinf(mYaw) * cosf(mPitch);
 
   normalize3(&mDirection);
 

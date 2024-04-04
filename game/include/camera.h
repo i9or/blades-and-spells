@@ -1,15 +1,15 @@
 #ifndef camera_h
 #define camera_h
 
-#include "../shared/vec3.h"
+#include "vec3.h"
 
 void cameraInit(void);
 
-void cameraRotateYaw(const float);
+void cameraRotateYaw(float dx);
 
-void cameraRotatePitch(const float);
+void cameraRotatePitch(float dy);
 
-void cameraMove(float);
+void cameraMove(float amount);
 
 void cameraUpdateDirection(void);
 

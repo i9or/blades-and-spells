@@ -4,20 +4,21 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <GLUT/glut.h>
 
-#include "../shared/utils/logger.h"
-#include "../shared/mesh.h"
-#include "../shared/loaders/load_obj.h"
+#include "load_obj.h"
+#include "logger.h"
+#include "mesh.h"
 
 #include "camera.h"
+#include "grid.h"
 #include "keyboard.h"
-#include "utils/triangle.h"
-#include "utils/grid.h"
+#include "triangle.h"
 
 #define WINDOWED_MODE true /* change to "false" to run game in fullscreen */
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
-bool gFpsMode = false;
+static bool gFpsMode = false;
+static char gDrawingTime[64] = "";
 
 void initGame(void);
 void cleanUp(void);
@@ -29,17 +30,20 @@ void mouseMotionHandler(int, int);
 void processKeyboard(void);
 void processCamera(void);
 
-Mesh gBunny;
+static Mesh gBunny;
 bool loadBunny(void);
 void drawBunny(void);
+void setOrthographicProjection(void);
+void restorePerspectiveProjection(void);
+void renderBitmapString(float x, float y, void *font, char *string);
 
 int main(int argc, char **argv) {
   if (atexit(cleanUp) != 0) {
-    logDebug("Clean up function registration failed...");
+    LOG_DEBUG("Clean up function registration failed...");
     return EXIT_FAILURE;
   }
 
-  logDebug("Creating a window");
+  LOG_DEBUG("Creating a window");
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 
@@ -52,7 +56,7 @@ int main(int argc, char **argv) {
     if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE))
       glutEnterGameMode();
     else {
-      logDebug("The selected mode is not available");
+      LOG_DEBUG("The selected mode is not available");
       exit(1);
     }
   }
@@ -74,7 +78,7 @@ int main(int argc, char **argv) {
 }
 
 void initGame(void) {
-  logDebug("Initializing a game");
+  LOG_DEBUG("Initializing a game");
 
   glClearColor(0.1f, 0.2f, 0.3f, 1.f);
   glEnable(GL_DEPTH_TEST);
@@ -87,7 +91,7 @@ void initGame(void) {
 }
 
 void cleanUp(void) {
-  logDebug("Cleaning up a game");
+  LOG_DEBUG("Cleaning up a game");
 
   destroyMesh(&gBunny);
 }
@@ -105,13 +109,20 @@ void displayHandler(void) {
   drawBunny();
   /* =============== */
 
+  setOrthographicProjection();
+  glPushMatrix();
+  glLoadIdentity();
+  glColor3f(0.f, 1.f, 1.f);
+  renderBitmapString(5, 20, GLUT_BITMAP_HELVETICA_18, gDrawingTime);
+  glPopMatrix();
+
+  restorePerspectiveProjection();
+
   glutSwapBuffers();
 
   int t2 = glutGet(GLUT_ELAPSED_TIME);
 
-  char title[64];
-  sprintf(title, "Draw time: %d", t2 - t1);
-  glutSetWindowTitle(title);
+  sprintf(gDrawingTime, "Draw time: %d", t2 - t1);
 }
 
 void reshapeHandler(int w, int h) {
@@ -129,7 +140,7 @@ void reshapeHandler(int w, int h) {
 }
 
 void keyDownHandler(unsigned char key, int x, int y) {
-  logDebug("Key pressed: %c - %d", key, key);
+  LOG_DEBUG("Key pressed: %c - %d", key, key);
 
   if (key == ESCAPE_KEY) {
     exit(EXIT_SUCCESS);
@@ -233,4 +244,30 @@ void drawBunny(void) {
   glEnd();
 
   glPopMatrix();
+}
+
+void setOrthographicProjection(void) {
+  glMatrixMode(GL_PROJECTION);
+  glPushMatrix();
+  glLoadIdentity();
+
+  int width = glutGet(GLUT_WINDOW_WIDTH);
+  int height = glutGet(GLUT_WINDOW_HEIGHT);
+  gluOrtho2D(0, width, height, 0);
+
+  glMatrixMode(GL_MODELVIEW);
+}
+
+void restorePerspectiveProjection(void) {
+  glMatrixMode(GL_PROJECTION);
+  glPopMatrix();
+  glMatrixMode(GL_MODELVIEW);
+}
+
+void renderBitmapString(float x, float y, void *font, char *string) {
+  glRasterPos2f(x, y);
+
+  for (char *c = string; *c != '\0'; ++c) {
+    glutBitmapCharacter(font, *c);
+  }
 }

@@ -10,13 +10,13 @@ void normalize3(Vec3 *v) {
   v->z /= length;
 }
 
-float dot3(const Vec3 *v1, const Vec3 *v2) {
-  return v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
+float dot3(const Vec3 *a, const Vec3 *b) {
+  return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
-Vec3 cross3(const Vec3 *v1, const Vec3 *v2) {
+Vec3 cross3(const Vec3 *a, const Vec3 *b) {
   return ((Vec3) {
-      .x = v1->y * v2->z - v1->z * v2->y,
-      .y = v1->z * v2->x - v1->x * v2->z,
-      .z = v1->x * v2->y - v1->y * v2->x });
+      .x = a->y * b->z - a->z * b->y,
+      .y = a->z * b->x - a->x * b->z,
+      .z = a->x * b->y - a->y * b->x });
 }

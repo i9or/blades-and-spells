@@ -1,10 +1,16 @@
-#ifndef load_obj_h
-#define load_obj_h
+#ifndef LOAD_OBJ_H
+#define LOAD_OBJ_H
 
 #include <stdbool.h>
 #include <string.h>
 
-#include "../mesh.h"
+#include "mesh.h"
+
+#define MAX_FILE_PATH_LENGTH 512
+#define MAX_LINE_WIDTH 1024
+#define SPACE_DELIMITER " "
+#define FORWARD_SLASH_DELIMITER "/"
+#define INDEX_UNDEFINED (-1)
 
 #define MATERIAL_LIBRARY_NAME_TOKEN "mtllib"
 #define OBJECT_NAME_TOKEN "o"
@@ -16,6 +22,6 @@
 
 #define stripNewline(str) (str)[strcspn((str), "\r\n")] = '\0'
 
-bool loadObj(const char *, Mesh *);
+bool loadObj(const char *path, Mesh *mesh);
 
-#endif
+#endif /* LOAD_OBJ_H */

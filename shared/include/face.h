@@ -1,5 +1,5 @@
-#ifndef face_h
-#define face_h
+#ifndef FACE_H
+#define FACE_H
 
 typedef struct {
   int v1, v2, v3;
@@ -7,4 +7,4 @@ typedef struct {
   int n1, n2, n3;
 } Face;
 
-#endif /* face_h */
+#endif /* FACE_H */

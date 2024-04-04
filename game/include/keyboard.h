@@ -1,5 +1,5 @@
-#ifndef keyboard_h
-#define keyboard_h
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
 
 #include <stdbool.h>
 
@@ -20,10 +20,10 @@ typedef enum {
   SHIFT_G_KEY = 71
 } Keys;
 
-void pressKey(unsigned char);
+void pressKey(unsigned char key);
 
-void resetKey(unsigned char);
+void resetKey(unsigned char key);
 
-bool isKeyPressed(unsigned char);
+bool isKeyPressed(unsigned char key);
 
-#endif /* keyboard_h */
+#endif /* KEYBOARD_H */

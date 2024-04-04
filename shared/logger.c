@@ -6,14 +6,14 @@
 
 #include "logger.h"
 
-static bool getTimeNow(char *buf, size_t len) {
+static bool getTimeNow(char *buf) {
   time_t currentTime = time(NULL);
 
   if (currentTime != (time_t)(-1)) {
     struct tm *localTime = localtime(&currentTime);
 
     if (localTime != NULL) {
-      strftime(buf, len, "%F %T", localTime);
+      strftime(buf, TIME_STR_LEN, "%F %T", localTime);
       return true;
     }
   }
@@ -21,9 +21,9 @@ static bool getTimeNow(char *buf, size_t len) {
   return false;
 }
 
-void logDebug(const char *fmt, ...) {
-  char timeStr[50];
-  if (!getTimeNow(timeStr, sizeof(timeStr))) {
+void __logDebug(const char *fmt, ...) {
+  char timeStr[TIME_STR_LEN];
+  if (!getTimeNow(timeStr)) {
     strncpy(timeStr, "Failed to retrieve time", sizeof(timeStr));
   }
 
