@@ -17,7 +17,11 @@ typedef enum {
   T_KEY = 116,
   SHIFT_T_KEY = 84,
   G_KEY = 103,
-  SHIFT_G_KEY = 71
+  SHIFT_G_KEY = 71,
+  U_KEY = 117,
+  SHIFT_U_KEY = 85,
+  J_KEY = 106,
+  SHIFT_J_KEY = 74,
 } Keys;
 
 void pressKey(unsigned char key);

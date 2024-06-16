@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "constants.h"
 #include "logger.h"
 #include "mesh.h"
+#include "utilities.h"
 
 #include "load_obj.h"
 
@@ -29,11 +31,11 @@ bool loadObj(const char *path, Mesh *mesh) {
 
     if (strcmp(token, MATERIAL_LIBRARY_NAME_TOKEN) == 0) {
       token = strtok(NULL, SPACE_DELIMITER);
-      stripNewline(token);
+      STRIP_NEWLINE(token);
       setMeshMaterialLib(mesh, token);
     } else if (strcmp(token, OBJECT_NAME_TOKEN) == 0) {
       token = strtok(NULL, SPACE_DELIMITER);
-      stripNewline(token);
+      STRIP_NEWLINE(token);
       setMeshName(mesh, token);
     } else if (strcmp(token, VERTEX_COORDINATES_TOKEN) == 0) {
       char *xStr, *yStr, *zStr;

@@ -16,9 +16,9 @@ static float mPitch;
 
 void cameraInit(void) {
   LOG_DEBUG("Initializing a camera");
-  mYaw = M_PI / 2.f;
+  mYaw = (float)-M_PI / 2.f;
   mPitch = 0.f;
-  mPosition = (Vec3) { .x = 0.f, .y = 1.8f, .z = -5.f };
+  mPosition = (Vec3) { .x = 0.f, .y = 1.8f, .z = 10.f };
   cameraUpdateDirection();
 }
 
@@ -71,4 +71,8 @@ Vec3 cameraGetDirection(void) {
 
 Vec3 cameraGetUp(void) {
   return mUp;
+}
+
+void cameraFly(float amount) {
+  mPosition.y += amount * MOVE_SPEED;
 }

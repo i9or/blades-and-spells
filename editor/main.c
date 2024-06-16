@@ -22,7 +22,7 @@ void mouseClickHandler(int, int, int, int);
 
 int main(int argc, char **argv) {
   if (atexit(cleanUp) != 0) {
-    logDebug("Clean up function registration failed");
+    LOG_DEBUG("Clean up function registration failed");
     return EXIT_FAILURE;
   }
 
@@ -51,11 +51,11 @@ int main(int argc, char **argv) {
 }
 
 void cleanUp(void) {
-  logDebug("Cleaning up");
+  LOG_DEBUG("Cleaning up");
 }
 
 void initEditor(void) {
-  logDebug("Initialising editor");
+  LOG_DEBUG("Initialising editor");
   glClearColor(0.3f, 0.3f, 0.3f, 1.f);
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LEQUAL);
@@ -93,7 +93,7 @@ void displayHandler(void) {
 }
 
 void reshapeHandler(int w, int h) {
-  logDebug("Reshape: %d %d", w, h);
+  LOG_DEBUG("Reshape: %d %d", w, h);
   if (w < 1) {
     w = 1;
   }
@@ -109,7 +109,7 @@ void reshapeHandler(int w, int h) {
 }
 
 void keyDownHandler(unsigned char key, int x, int y) {
-  logDebug("Key down: %c %d %d %d", key, key, x, y);
+  LOG_DEBUG("Key down: %c %d %d %d", key, key, x, y);
 
   if (key == 27) {
     exit(EXIT_SUCCESS);
@@ -117,13 +117,13 @@ void keyDownHandler(unsigned char key, int x, int y) {
 }
 
 void keyUpHandler(unsigned char key, int x, int y) {
-  logDebug("Key up: %c %d %d %d", key, key, x, y);
+  LOG_DEBUG("Key up: %c %d %d %d", key, key, x, y);
 }
 
 void mouseMotionHandler(int x, int y) {
-  logDebug("Mouse motion: %d %d", x, y);
+  LOG_DEBUG("Mouse motion: %d %d", x, y);
 }
 
 void mouseClickHandler(int button, int state, int x, int y) {
-  logDebug("Mouse click: %d %d %d %d", button, state, x, y);
+  LOG_DEBUG("Mouse click: %d %d %d %d", button, state, x, y);
 }

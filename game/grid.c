@@ -3,6 +3,7 @@
 #include "grid.h"
 
 void drawGrid(void) {
+  glDisable(GL_LIGHTING);
   glPushMatrix();
 
   glColor3f(0.f, 1.f, 0.f);
@@ -20,4 +21,5 @@ void drawGrid(void) {
   glEnd();
 
   glPopMatrix();
+  glEnable(GL_LIGHTING);
 }

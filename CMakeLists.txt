@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.28)
 project(blades_and_spells LANGUAGES C)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 if (APPLE)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated-declarations")
@@ -20,10 +21,3 @@ include_directories({GLUT_INCLUDE_DIR} {OPENGL_INCLUDE_DIR})
 add_subdirectory(shared)
 add_subdirectory(game)
 add_subdirectory(editor)
-
-#add_executable(${PROJECT_NAME} game/main.c)
-#target_link_libraries(${PROJECT_NAME} PRIVATE GLUT::GLUT OpenGL::GL shared)
-#
-#set(EDITOR_NAME bns_editor)
-#add_executable(${EDITOR_NAME} editor/main.c)
-#target_link_libraries(${EDITOR_NAME} PRIVATE GLUT::GLUT OpenGL::GL shared)
