@@ -2,8 +2,12 @@
 
 #include "vec3.h"
 
+float length3(const Vec3 *v) {
+  return sqrtf(v->x * v->x + v->y * v->y + v->z * v->z);
+}
+
 void normalize3(Vec3 *v) {
-  float length = sqrtf(v->x * v->x + v->y * v->y + v->z * v->z);
+  float length = length3(v);
 
   v->x /= length;
   v->y /= length;

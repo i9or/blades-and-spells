@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "constants.h"
 #include "image.h"
@@ -21,7 +22,8 @@
 
 static bool gFpsMode = false;
 static char gDrawingTime[64] = "";
-static float gLightAngle = -270.f;
+static float gLightAngle = 100.f; //-270.f;
+static int gAccum = 0;
 
 void initGame(void);
 void cleanUp(void);
@@ -100,7 +102,7 @@ void initGame(void) {
   glEnable(GL_LIGHT0);
 
   // Sunlight
-  float lightAmbient[] = { 0.2f, 0.2f, 0.2f, 1.f };
+  float lightAmbient[] = { 0.4f, 0.4f, 0.4f, 1.f };
   float lightSpecular[] = { 1.f, 1.f, 1.f, 1.f };
 
   glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
@@ -129,10 +131,10 @@ void displayHandler(void) {
 
   /* Draw scene here */
   drawSun();
-  drawGrid();
+//  drawGrid();
   drawLandscape();
-  drawBunny();
-  drawTeapot();
+//  drawBunny();
+//  drawTeapot();
   /* =============== */
 
   glDisable(GL_LIGHTING);
@@ -155,7 +157,11 @@ void displayHandler(void) {
 
   int t2 = glutGet(GLUT_ELAPSED_TIME);
 
-  sprintf(gDrawingTime, "Draw time: %d", t2 - t1);
+  gAccum++;
+  if (gAccum > 5) {
+    sprintf(gDrawingTime, "Draw time: %d", t2 - t1);
+    gAccum = 0;
+  }
 }
 
 void drawTeapot(void) {
@@ -285,9 +291,9 @@ bool loadBunny(void) {
 void drawBunny(void) {
   glPushMatrix();
 
-  glColor3f(gBunnyMaterial.diffuseColor.x,
-            gBunnyMaterial.diffuseColor.y,
-            gBunnyMaterial.diffuseColor.z);
+//  glColor3f(gBunnyMaterial.diffuseColor.x,
+//            gBunnyMaterial.diffuseColor.y,
+//            gBunnyMaterial.diffuseColor.z);
 
   glBegin(GL_TRIANGLES);
 
@@ -352,7 +358,7 @@ bool loadHeightmap(void) {
 
   initMesh(&gLandscape);
 
-  const float SCALE_FACTOR = 1.f;
+  const float SCALE_FACTOR = 2.f;
 
   int w = gHeightmap.header.width;
   int h = gHeightmap.header.height;
@@ -397,9 +403,8 @@ bool loadHeightmap(void) {
                         .y = gLandscape.vertices.data[v3].y - gLandscape.vertices.data[v1].y,
                         .z = gLandscape.vertices.data[v3].z - gLandscape.vertices.data[v1].z };
 
-      Vec3 n1 = (Vec3) { .x = a.y * b.z - a.z * b.y,
-                         .y = a.z * b.x - a.x * b.z,
-                         .z = a.x * b.y - a.y * b.x };
+      Vec3 n1 = cross3(&a, &b);
+      normalize3(&n1);
 
       addMeshNormal(&gLandscape, n1);
       addMeshFace(&gLandscape, (Face) { .v1 = v1, .v2 = v2, .v3 = v3, .n1 = normalIndex, .n2 = normalIndex, .n3 = normalIndex });
@@ -412,9 +417,8 @@ bool loadHeightmap(void) {
                         .y = gLandscape.vertices.data[v4].y - gLandscape.vertices.data[v3].y,
                         .z = gLandscape.vertices.data[v4].z - gLandscape.vertices.data[v3].z };
 
-      Vec3 n2 = (Vec3) { .x = c.y * d.z - c.z * d.y,
-                         .y = c.z * d.x - c.x * d.z,
-                         .z = c.x * d.y - c.y * d.x };
+      Vec3 n2 = cross3(&a, &b);
+      normalize3(&n2);
 
       addMeshNormal(&gLandscape, n2);
       addMeshFace(&gLandscape, (Face) { .v1 = v3, .v2 = v2, .v3 = v4, .n1 = normalIndex, .n2 = normalIndex, .n3 = normalIndex });
@@ -427,11 +431,14 @@ bool loadHeightmap(void) {
 
 void setColorByHeight(float height) {
   if (height >= 0.f && height <= 0.3f) {
-    glColor3f(0.33f, 0.49f, 0.28f);
+    float color[4] = { 58.f / 255.f, 65.f / 255.f, 36.f / 255.f, 1.0 };
+    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color );
   } else if (height > 0.3f && height <= 0.7f) {
-    glColor3f(0.6f, 0.46f, 0.32f);
+    float color[4] = { 62.f / 255.f, 37.f / 255.f, 22.f / 255.f, 1.0 };
+    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color );
   } else {
-    glColor3f(1.f, 0.98f, 0.98f);
+    float color[4] = { 1.f, 0.98f, 0.98f, 1.0 };
+    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color );
   }
 }
 
@@ -485,10 +492,10 @@ void drawLandscape(void) {
 }
 
 void drawSun(void) {
-  gLightAngle += 0.1f;
-  if (gLightAngle > 360.f) {
-    gLightAngle -= 360.f;
-  }
+//  gLightAngle += 0.1f;
+//  if (gLightAngle > 360.f) {
+//    gLightAngle -= 360.f;
+//  }
 
   const float SCALE_FACTOR = 5.f;
   float lightX = 100.f * cosf(gLightAngle * (float)M_PI / 180.f) * SCALE_FACTOR;

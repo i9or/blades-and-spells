@@ -18,7 +18,7 @@ void cameraInit(void) {
   LOG_DEBUG("Initializing a camera");
   mYaw = (float)-M_PI / 2.f;
   mPitch = 0.f;
-  mPosition = (Vec3) { .x = 0.f, .y = 1.8f, .z = 10.f };
+  mPosition = (Vec3) { .x = 0.f, .y = 10.8f, .z = 10.f };
   cameraUpdateDirection();
 }
 
