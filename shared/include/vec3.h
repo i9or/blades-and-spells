@@ -13,4 +13,8 @@ float dot3(const Vec3 *a, const Vec3 *b);
 
 Vec3 cross3(const Vec3 *a, const Vec3 *b);
 
+Vec3 add3(const Vec3 *a, const Vec3 *b);
+
+Vec3 sub3(const Vec3 *a, const Vec3 *b);
+
 #endif /* VEC3_H */

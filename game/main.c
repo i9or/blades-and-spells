@@ -368,11 +368,8 @@ bool loadHeightmap(void) {
       int index = y * w * 4 + x * 4;
 
       float vx = ((float)x - (float)w / 2.f) * SCALE_FACTOR;
-      float vz = ((float)y - (float)h / 2.f) * SCALE_FACTOR;
-
       float vy = (float)gHeightmap.imageData[index];
-
-      //      LOG_DEBUG("(%f, %f) %f", vx, vy, vz);
+      float vz = ((float)y - (float)h / 2.f) * SCALE_FACTOR;
 
       addMeshVertex(&gLandscape, (Vec3) { .x = vx, .y = vy, .z = vz });
     }
@@ -382,48 +379,58 @@ bool loadHeightmap(void) {
 
   for (int y = 0; y < h - 1; ++y) {
     for (int x = 0; x < w - 1; ++x) {
-      int v1X = x;
-      int v1Y = y;
-      int v2X = x;
-      int v2Y = y + 1;
-      int v3X = x + 1;
-      int v3Y = y;
-      int v4X = x + 1;
-      int v4Y = y + 1;
+      int v1 = y * w + x;
+      int v2 = (y + 1) * w + x;
+      int v3 = y * w + x + 1;
+      int v4 = (y + 1) * w + x + 1;
 
-      int v1 = v1Y * w + v1X;
-      int v2 = v2Y * w + v2X;
-      int v3 = v3Y * w + v3X;
-      int v4 = v4Y * w + v4X;
-
-      Vec3 a = (Vec3) { .x = gLandscape.vertices.data[v2].x - gLandscape.vertices.data[v1].x,
-                        .y = gLandscape.vertices.data[v2].y - gLandscape.vertices.data[v1].y,
-                        .z = gLandscape.vertices.data[v2].z - gLandscape.vertices.data[v1].z };
-      Vec3 b = (Vec3) { .x = gLandscape.vertices.data[v3].x - gLandscape.vertices.data[v1].x,
-                        .y = gLandscape.vertices.data[v3].y - gLandscape.vertices.data[v1].y,
-                        .z = gLandscape.vertices.data[v3].z - gLandscape.vertices.data[v1].z };
-
+      Vec3 a = sub3(&gLandscape.vertices.data[v2], &gLandscape.vertices.data[v1]);
+      Vec3 b = sub3(&gLandscape.vertices.data[v3], &gLandscape.vertices.data[v1]);
       Vec3 n1 = cross3(&a, &b);
       normalize3(&n1);
 
       addMeshNormal(&gLandscape, n1);
-      addMeshFace(&gLandscape, (Face) { .v1 = v1, .v2 = v2, .v3 = v3, .n1 = normalIndex, .n2 = normalIndex, .n3 = normalIndex });
+      addMeshFace(&gLandscape,
+                  (Face) { .v1 = v1, .v2 = v2, .v3 = v3, //
+                           .n1 = normalIndex,
+                           .n2 = normalIndex,
+                           .n3 = normalIndex });
       normalIndex++;
 
-      Vec3 c = (Vec3) { .x = gLandscape.vertices.data[v2].x - gLandscape.vertices.data[v3].x,
-                        .y = gLandscape.vertices.data[v2].y - gLandscape.vertices.data[v3].y,
-                        .z = gLandscape.vertices.data[v2].z - gLandscape.vertices.data[v3].z };
-      Vec3 d = (Vec3) { .x = gLandscape.vertices.data[v4].x - gLandscape.vertices.data[v3].x,
-                        .y = gLandscape.vertices.data[v4].y - gLandscape.vertices.data[v3].y,
-                        .z = gLandscape.vertices.data[v4].z - gLandscape.vertices.data[v3].z };
-
-      Vec3 n2 = cross3(&a, &b);
+      Vec3 c = sub3(&gLandscape.vertices.data[v2], &gLandscape.vertices.data[v3]);
+      Vec3 d = sub3(&gLandscape.vertices.data[v4], &gLandscape.vertices.data[v3]);
+      Vec3 n2 = cross3(&c, &d);
       normalize3(&n2);
 
       addMeshNormal(&gLandscape, n2);
-      addMeshFace(&gLandscape, (Face) { .v1 = v3, .v2 = v2, .v3 = v4, .n1 = normalIndex, .n2 = normalIndex, .n3 = normalIndex });
+      addMeshFace(&gLandscape,
+                  (Face) { .v1 = v3, .v2 = v2, .v3 = v4, //
+                           .n1 = normalIndex,
+                           .n2 = normalIndex,
+                           .n3 = normalIndex });
       normalIndex++;
     }
+  }
+
+  for (int i = 0; i < gLandscape.vertices.count; ++i) {
+    Vec3Array normals;
+    initArray(normals);
+
+    for (int j = 0; j < gLandscape.faces.count; ++j) {
+      if (gLandscape.faces.data[j].v1 == i ||
+          gLandscape.faces.data[j].v2 == i ||
+          gLandscape.faces.data[j].v3 == i) {
+        Vec3 n = gLandscape.normals.data[gLandscape.faces.data[j].n1];
+        pushToArray(normals, n);
+      }
+
+      // Six is the maximum number of faces sharing the same vertex
+      if (normals.count == 6) {
+        break;
+      }
+    }
+
+    LOG_DEBUG("%d", normals.count);
   }
 
   return true;
@@ -449,7 +456,6 @@ void drawLandscape(void) {
 
   glBegin(GL_TRIANGLES);
 
-  float color = 0.f;
   for (int i = 0; i < gLandscape.faces.count; ++i) {
     int v1 = gLandscape.faces.data[i].v1;
     int v2 = gLandscape.faces.data[i].v2;

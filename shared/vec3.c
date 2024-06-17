@@ -24,3 +24,17 @@ Vec3 cross3(const Vec3 *a, const Vec3 *b) {
       .y = a->z * b->x - a->x * b->z,
       .z = a->x * b->y - a->y * b->x });
 }
+
+Vec3 add3(const Vec3 *a, const Vec3 *b) {
+  return ((Vec3) {
+      .x = a->x + b->x,
+      .y = a->y + b->y,
+      .z = a->z + b->z });
+}
+
+Vec3 sub3(const Vec3 *a, const Vec3 *b) {
+  return ((Vec3) {
+      .x = a->x - b->x,
+      .y = a->y - b->y,
+      .z = a->z - b->z });
+}
