@@ -1,9 +1,10 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <GLUT/glut.h>
+#include <OpenGL/gl.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #include "constants.h"
 #include "image.h"
@@ -13,7 +14,7 @@
 #include "logger.h"
 
 #include "camera.h"
-#include "grid.h"
+// #include "grid.h"
 #include "keyboard.h"
 
 #define WINDOWED_MODE true /* change to "false" to run game in fullscreen */
@@ -131,10 +132,10 @@ void displayHandler(void) {
 
   /* Draw scene here */
   drawSun();
-//  drawGrid();
+  //  drawGrid();
   drawLandscape();
-//  drawBunny();
-//  drawTeapot();
+  //  drawBunny();
+  //  drawTeapot();
   /* =============== */
 
   glDisable(GL_LIGHTING);
@@ -291,9 +292,9 @@ bool loadBunny(void) {
 void drawBunny(void) {
   glPushMatrix();
 
-//  glColor3f(gBunnyMaterial.diffuseColor.x,
-//            gBunnyMaterial.diffuseColor.y,
-//            gBunnyMaterial.diffuseColor.z);
+  //  glColor3f(gBunnyMaterial.diffuseColor.x,
+  //            gBunnyMaterial.diffuseColor.y,
+  //            gBunnyMaterial.diffuseColor.z);
 
   glBegin(GL_TRIANGLES);
 
@@ -467,13 +468,13 @@ bool loadHeightmap(void) {
 void setColorByHeight(float height) {
   if (height >= 0.f && height <= 0.3f) {
     float color[4] = { 58.f / 255.f, 65.f / 255.f, 36.f / 255.f, 1.0 };
-    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color );
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color);
   } else if (height > 0.3f && height <= 0.7f) {
     float color[4] = { 62.f / 255.f, 37.f / 255.f, 22.f / 255.f, 1.0 };
-    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color );
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color);
   } else {
     float color[4] = { 1.f, 0.98f, 0.98f, 1.0 };
-    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color );
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color);
   }
 }
 
@@ -526,10 +527,10 @@ void drawLandscape(void) {
 }
 
 void drawSun(void) {
-//  gLightAngle += 0.1f;
-//  if (gLightAngle > 360.f) {
-//    gLightAngle -= 360.f;
-//  }
+  //  gLightAngle += 0.1f;
+  //  if (gLightAngle > 360.f) {
+  //    gLightAngle -= 360.f;
+  //  }
 
   const float SCALE_FACTOR = 5.f;
   float lightX = 100.f * cosf(gLightAngle * (float)M_PI / 180.f) * SCALE_FACTOR;
