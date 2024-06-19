@@ -38,3 +38,9 @@ Vec3 sub3(const Vec3 *a, const Vec3 *b) {
       .y = a->y - b->y,
       .z = a->z - b->z });
 }
+
+void div3(Vec3 *v, float divider) {
+  v->x = v->x / divider;
+  v->y = v->y / divider;
+  v->z = v->z / divider;
+}

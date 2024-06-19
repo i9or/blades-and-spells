@@ -412,6 +412,9 @@ bool loadHeightmap(void) {
     }
   }
 
+  Vec3Array smoothNormals;
+  initArray(smoothNormals);
+
   for (int i = 0; i < gLandscape.vertices.count; ++i) {
     Vec3Array normals;
     initArray(normals);
@@ -430,7 +433,32 @@ bool loadHeightmap(void) {
       }
     }
 
-    LOG_DEBUG("%d", normals.count);
+    Vec3 averageNormal = (Vec3) { .x = 0.f, .y = 0.f, .z = 0.f };
+    for (int j = 0; j < normals.count; ++j) {
+      averageNormal = add3(&averageNormal, &(normals.data[j]));
+    }
+
+    div3(&averageNormal, normals.count);
+    normalize3(&averageNormal);
+
+    pushToArray(smoothNormals, averageNormal);
+  }
+
+  destroyArray(gLandscape.normals);
+  initArray(gLandscape.normals);
+
+  for (int i = 0; i < smoothNormals.count; ++i) {
+    pushToArray(gLandscape.normals, smoothNormals.data[i]);
+  }
+
+  for (int i = 0; i < gLandscape.faces.count; ++i) {
+    int v1 = gLandscape.faces.data[i].v1;
+    int v2 = gLandscape.faces.data[i].v2;
+    int v3 = gLandscape.faces.data[i].v3;
+
+    gLandscape.faces.data[i].n1 = v1;
+    gLandscape.faces.data[i].n2 = v2;
+    gLandscape.faces.data[i].n3 = v3;
   }
 
   return true;

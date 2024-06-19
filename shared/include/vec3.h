@@ -17,4 +17,6 @@ Vec3 add3(const Vec3 *a, const Vec3 *b);
 
 Vec3 sub3(const Vec3 *a, const Vec3 *b);
 
+void div3(Vec3 *v, float divider);
+
 #endif /* VEC3_H */
