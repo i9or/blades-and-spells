@@ -44,3 +44,10 @@ void mouseMotionHandler(int x, int y) {
 }
 ```
 
+## Camera collisions
+
+Need to decide wether camera will calculate collision with the landscape based on the interpolated values from the heightmap or real collision detection system based on geometry needs to be implemented.
+
+Will probably go with the latter as it automatically solves the collision detection with the buildings and other objects in the scene.
+
+To effectively implement collision detection with the geometry the ROAM technique needs to be implemented, as level is a square ortholinear grid and buildings could be positioned only on the grid, with no rotations or other translations whatsoever.

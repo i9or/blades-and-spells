@@ -76,3 +76,7 @@ Vec3 cameraGetUp(void) {
 void cameraFly(float amount) {
   mPosition.y += amount * MOVE_SPEED;
 }
+
+void cameraSetHeight(float height) {
+  mPosition.y = height;
+}
