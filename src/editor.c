@@ -3,7 +3,7 @@
 
 #include <GLUT/GLUT.h>
 
-#include "logger.h"
+#include "utils/logger.h"
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768

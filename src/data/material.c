@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "logger.h"
+#include "../utils/logger.h"
+
 #include "material.h"
 
 void initMaterial(Material *material) {
@@ -27,7 +28,7 @@ void setMaterialName(Material *material, const char *name) {
     resetMaterialName(material);
   }
 
-  material->name = malloc(sizeof(char) * strlen(name));
+  material->name = malloc(sizeof(char) * (strlen(name) + 1));
   strcpy(material->name, name);
 }
 
@@ -36,7 +37,7 @@ void setMaterialDiffuseMapPath(Material *material, const char *diffuseMapPath) {
     resetMaterialDiffuseMapPath(material);
   }
 
-  material->diffuseMapPath = malloc(sizeof(char) * strlen(diffuseMapPath));
+  material->diffuseMapPath = malloc(sizeof(char) * (strlen(diffuseMapPath) + 1));
   strcpy(material->diffuseMapPath, diffuseMapPath);
 }
 

@@ -6,12 +6,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "constants.h"
-#include "image.h"
-#include "load_mtl.h"
-#include "load_obj.h"
-#include "load_tga.h"
-#include "logger.h"
+#include "data/image.h"
+#include "loaders/load_mtl.h"
+#include "loaders/load_obj.h"
+#include "loaders/load_tga.h"
+#include "utils/constants.h"
+#include "utils/logger.h"
 
 #include "camera.h"
 // #include "grid.h"
@@ -268,12 +268,12 @@ void processCamera(void) {
 }
 
 bool loadBunny(void) {
-  if (!loadObj("../assets/bunny.obj", &gBunny)) {
+  if (!loadObj("./assets/bunny.obj", &gBunny)) {
     return false;
   }
 
   char mtlPath[MAX_FILE_PATH_LENGTH];
-  sprintf(mtlPath, "%s%s", "../assets/", gBunny.materialLib);
+  sprintf(mtlPath, "%s%s", "./assets/", gBunny.materialLib);
   if (!loadMtl(mtlPath, &gBunnyMaterial)) {
     return false;
   }
@@ -353,7 +353,7 @@ void renderBitmapString(float x, float y, void *font, char *string) {
 }
 
 bool loadHeightmap(void) {
-  if (!loadTga("../assets/heightmap.tga", &gHeightmap)) {
+  if (!loadTga("./assets/heightmap.tga", &gHeightmap)) {
     return false;
   }
 

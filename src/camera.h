@@ -1,7 +1,7 @@
 #ifndef camera_h
 #define camera_h
 
-#include "vec3.h"
+#include "data/vec3.h"
 
 void cameraInit(void);
 void cameraRotateYaw(float dx);

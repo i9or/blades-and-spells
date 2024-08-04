@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#include "image.h"
+#include "../data/image.h"
 
 bool loadTga(const char *path, Image *image);
 

@@ -18,7 +18,7 @@ void setMeshMaterialLib(Mesh *mesh, const char *path) {
   }
 
   mesh->materialLib = malloc(strlen(path));
-  strncpy(mesh->materialLib, path, strlen(path));
+  strncpy(mesh->materialLib, path, strlen(path) + 1);
 }
 
 void setMeshName(Mesh *mesh, const char *name) {
@@ -26,8 +26,8 @@ void setMeshName(Mesh *mesh, const char *name) {
     resetMeshName(mesh);
   }
 
-  mesh->name = malloc(strlen(name));
-  strncpy(mesh->name, name, strlen(name));
+  mesh->name = malloc(strlen(name) + 1);
+  strncpy(mesh->name, name, strlen(name) + 1);
 }
 
 void addMeshVertex(Mesh *mesh, Vec3 vertex) {

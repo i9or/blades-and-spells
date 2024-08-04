@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "constants.h"
-#include "logger.h"
-#include "utilities.h"
+#include "../data/vec3.h"
+#include "../utils/constants.h"
+#include "../utils/logger.h"
+#include "../utils/utilities.h"
 
 #include "load_mtl.h"
-#include "vec3.h"
 
 bool loadMtl(const char *path, Material *material) {
   initMaterial(material);

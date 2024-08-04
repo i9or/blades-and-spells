@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "mesh.h"
+#include "../data/mesh.h"
 
 #define MATERIAL_LIBRARY_NAME_TOKEN "mtllib"
 #define OBJECT_NAME_TOKEN "o"

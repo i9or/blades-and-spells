@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#include "material.h"
+#include "../data/material.h"
 
 #define MATERIAL_NAME_TOKEN "newmtl"
 #define DIFFUSE_COLOR_TOKEN "Kd"

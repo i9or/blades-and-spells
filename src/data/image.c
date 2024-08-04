@@ -1,8 +1,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+#include "../utils/logger.h"
+
 #include "image.h"
-#include "logger.h"
 
 static void printImageHeaderLine(char *label, int value) {
   LOG_DEBUG("%-30s:%d", label, value);

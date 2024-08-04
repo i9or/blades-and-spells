@@ -1,7 +1,8 @@
 #include <stdio.h>
 
+#include "../utils/logger.h"
+
 #include "load_tga.h"
-#include "logger.h"
 
 bool loadTga(const char *path, Image *image) {
   initImage(image);

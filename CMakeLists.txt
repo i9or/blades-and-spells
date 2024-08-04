@@ -18,6 +18,56 @@ find_package(OpenGL REQUIRED)
 
 include_directories({GLUT_INCLUDE_DIR} {OPENGL_INCLUDE_DIR})
 
-add_subdirectory(shared)
-add_subdirectory(game)
-add_subdirectory(editor)
+file(GLOB_RECURSE BNS_SOURCES CONFIGURE_DEPENDS src/*.c src/*.h)
+
+set(BNS_GAME_SOURCES
+  src/game.c
+  src/camera.c
+  src/camera.h
+  src/grid.c
+  src/grid.h
+  src/keyboard.h
+  src/keyboard.c
+  src/triangle.c
+  src/triangle.h
+  src/data/dynamic_array.c
+  src/data/dynamic_array.h
+  src/data/face.c
+  src/data/face.h
+  src/data/image.c
+  src/data/image.h
+  src/data/material.c
+  src/data/material.h
+  src/data/mesh.c
+  src/data/mesh.h
+  src/data/tex2.c
+  src/data/tex2.h
+  src/data/vec3.c
+  src/data/vec3.h
+  src/loaders/load_mtl.c
+  src/loaders/load_mtl.h
+  src/loaders/load_obj.c
+  src/loaders/load_obj.h
+  src/loaders/load_tga.c
+  src/loaders/load_tga.h
+  src/utils/constants.h
+  src/utils/logger.c
+  src/utils/logger.h
+  src/utils/utilities.h
+)
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${BNS_GAME_SOURCES})
+
+add_executable(${PROJECT_NAME} ${BNS_GAME_SOURCES})
+target_compile_features(${PROJECT_NAME} PRIVATE c_std_99)
+target_link_libraries(${PROJECT_NAME} GLUT::GLUT OpenGL::GL)
+
+set(BNS_EDITOR_SOURCES
+  src/editor.c
+  src/utils/logger.c
+  src/utils/logger.h
+)
+
+add_executable(editor ${BNS_EDITOR_SOURCES})
+target_compile_features(editor PRIVATE c_std_99)
+target_link_libraries(editor GLUT::GLUT OpenGL::GL)
